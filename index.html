@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SafeCheck AI – Product Safety Scanner</title>
+    <link rel="icon" type="image/svg+xml" href="/shield.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+
+      <!-- Header -->
+      <header class="header">
+        <div class="header-inner">
+          <div class="logo">
+            <i class="ti ti-shield-check logo-icon"></i>
+            <span class="logo-text">SafeCheck <span class="logo-accent">AI</span></span>
+          </div>
+          <span class="beta-badge">Beta</span>
+        </div>
+        <p class="tagline">Upload product images — ingredients label, expiry date, and product photo — and get an instant AI safety report. Powered by Google Gemini.</p>
+      </header>
+
+      <!-- Main -->
+      <main class="main">
+
+        <!-- Step indicators -->
+        <div class="steps-row">
+          <div class="step-card active" id="sc0" onclick="setTab(0)">
+            <div class="step-icon"><i class="ti ti-file-text"></i></div>
+            <div class="step-label">Ingredients</div>
+            <div class="step-sub">Product label</div>
+            <div class="step-status" id="ss0">Waiting</div>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-card" id="sc1" onclick="setTab(1)">
+            <div class="step-icon"><i class="ti ti-calendar-event"></i></div>
+            <div class="step-label">Expiry date</div>
+            <div class="step-sub">Date stamp</div>
+            <div class="step-status" id="ss1">Waiting</div>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-card" id="sc2" onclick="setTab(2)">
+            <div class="step-icon"><i class="ti ti-photo"></i></div>
+            <div class="step-label">Visual check</div>
+            <div class="step-sub">Product photo</div>
+            <div class="step-status" id="ss2">Waiting</div>
+          </div>
+        </div>
+
+        <!-- Upload panels -->
+        <div class="upload-panel" id="tab0">
+          <div class="panel-header">
+            <i class="ti ti-file-text panel-icon"></i>
+            <div>
+              <h2 class="panel-title">Ingredients label</h2>
+              <p class="panel-desc">Take a clear photo of the full ingredients list on the product packaging.</p>
+            </div>
+          </div>
+          <label class="upload-zone" for="inp0" id="uz0">
+            <input type="file" id="inp0" accept="image/*" />
+            <div class="upload-placeholder" id="up0">
+              <i class="ti ti-camera-plus upload-big-icon"></i>
+              <span class="upload-text">Click to upload or drag an image here</span>
+              <span class="upload-hint">JPG, PNG or WEBP — use a well-lit, in-focus photo</span>
+            </div>
+            <div class="upload-preview" id="uprev0" style="display:none">
+              <img id="uimg0" alt="Ingredients label preview" />
+              <div class="preview-meta">
+                <div>
+                  <div class="preview-name" id="uname0"></div>
+                  <div class="preview-size" id="usize0"></div>
+                </div>
+                <button class="remove-btn" id="rem0" type="button">
+                  <i class="ti ti-x"></i> Remove
+                </button>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <div class="upload-panel" id="tab1" style="display:none">
+          <div class="panel-header">
+            <i class="ti ti-calendar-event panel-icon"></i>
+            <div>
+              <h2 class="panel-title">Expiry date</h2>
+              <p class="panel-desc">Photograph the best-before or expiry date printed on the packaging.</p>
+            </div>
+          </div>
+          <label class="upload-zone" for="inp1" id="uz1">
+            <input type="file" id="inp1" accept="image/*" />
+            <div class="upload-placeholder" id="up1">
+              <i class="ti ti-camera-plus upload-big-icon"></i>
+              <span class="upload-text">Click to upload or drag an image here</span>
+              <span class="upload-hint">Make sure the date text is readable and well-lit</span>
+            </div>
+            <div class="upload-preview" id="uprev1" style="display:none">
+              <img id="uimg1" alt="Expiry date preview" />
+              <div class="preview-meta">
+                <div>
+                  <div class="preview-name" id="uname1"></div>
+                  <div class="preview-size" id="usize1"></div>
+                </div>
+                <button class="remove-btn" id="rem1" type="button">
+                  <i class="ti ti-x"></i> Remove
+                </button>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <div class="upload-panel" id="tab2" style="display:none">
+          <div class="panel-header">
+            <i class="ti ti-photo panel-icon"></i>
+            <div>
+              <h2 class="panel-title">Product condition</h2>
+              <p class="panel-desc">Photograph the actual product — packaging surface, texture, and color are all useful.</p>
+            </div>
+          </div>
+          <label class="upload-zone" for="inp2" id="uz2">
+            <input type="file" id="inp2" accept="image/*" />
+            <div class="upload-placeholder" id="up2">
+              <i class="ti ti-camera-plus upload-big-icon"></i>
+              <span class="upload-text">Click to upload or drag an image here</span>
+              <span class="upload-hint">Include any visible damage, discoloration, or swelling</span>
+            </div>
+            <div class="upload-preview" id="uprev2" style="display:none">
+              <img id="uimg2" alt="Product condition preview" />
+              <div class="preview-meta">
+                <div>
+                  <div class="preview-name" id="uname2"></div>
+                  <div class="preview-size" id="usize2"></div>
+                </div>
+                <button class="remove-btn" id="rem2" type="button">
+                  <i class="ti ti-x"></i> Remove
+                </button>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Analyze button -->
+        <button class="analyze-btn" id="analyzeBtn" disabled>
+          <span class="btn-idle"><i class="ti ti-shield-search"></i> Analyze product safety</span>
+          <span class="btn-loading" style="display:none">
+            <span class="spinner"></span> Analyzing — please wait…
+          </span>
+        </button>
+
+        <!-- Error box -->
+        <div class="error-box" id="errorBox" style="display:none">
+          <i class="ti ti-alert-circle"></i>
+          <span id="errorMsg"></span>
+        </div>
+
+        <!-- Result area -->
+        <div id="resultArea" style="display:none">
+
+          <div class="result-header-card">
+            <div class="result-icon-wrap" id="resultIconWrap">
+              <i class="ti result-main-icon" id="resultMainIcon"></i>
+            </div>
+            <div class="result-title-group">
+              <h2 class="result-verdict" id="resultVerdict"></h2>
+              <p class="result-summary" id="resultSummary"></p>
+            </div>
+            <div class="score-circle">
+              <svg viewBox="0 0 64 64">
+                <circle class="score-track" cx="32" cy="32" r="28" />
+                <circle class="score-fill" id="scoreFill" cx="32" cy="32" r="28" />
+              </svg>
+              <span class="score-number" id="scoreNumber">0</span>
+            </div>
+          </div>
+
+          <!-- Breakdown -->
+          <div class="breakdown-grid">
+            <div class="breakdown-card" id="bc-ingredients">
+              <div class="bc-header">
+                <i class="ti ti-file-text bc-icon"></i>
+                <span class="bc-title">Ingredients</span>
+                <span class="bc-badge" id="bb-ingredients"></span>
+              </div>
+              <p class="bc-notes" id="bn-ingredients"></p>
+              <div class="flagged-list" id="fl-ingredients"></div>
+            </div>
+            <div class="breakdown-card" id="bc-expiry">
+              <div class="bc-header">
+                <i class="ti ti-calendar-event bc-icon"></i>
+                <span class="bc-title">Expiry date</span>
+                <span class="bc-badge" id="bb-expiry"></span>
+              </div>
+              <p class="bc-notes" id="bn-expiry"></p>
+            </div>
+            <div class="breakdown-card" id="bc-visual">
+              <div class="bc-header">
+                <i class="ti ti-photo bc-icon"></i>
+                <span class="bc-title">Visual condition</span>
+                <span class="bc-badge" id="bb-visual"></span>
+              </div>
+              <p class="bc-notes" id="bn-visual"></p>
+            </div>
+          </div>
+
+          <!-- Recommendations -->
+          <div class="recommendations" id="recsBox" style="display:none">
+            <h3 class="recs-title"><i class="ti ti-bulb"></i> Recommendations</h3>
+            <ul id="recsList"></ul>
+          </div>
+
+          <!-- Disclaimer -->
+          <div class="disclaimer">
+            <i class="ti ti-info-circle"></i>
+            SafeCheck AI is a decision-support tool only. It does not replace professional medical or food safety advice. Always consult the product manufacturer or a qualified expert for definitive guidance.
+          </div>
+
+          <button class="reset-btn" id="resetBtn">
+            <i class="ti ti-refresh"></i> Scan another product
+          </button>
+
+        </div>
+      </main>
+
+      <footer class="footer">
+        Powered by Google Gemini &nbsp;·&nbsp; SafeCheck AI
+      </footer>
+
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
