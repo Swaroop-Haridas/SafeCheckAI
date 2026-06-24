@@ -84,4 +84,3 @@ http://localhost:5173
 5. Use the recommendations to make informed decisions.
 
 ---
-⭐ If you found this project useful, consider giving it a star.
